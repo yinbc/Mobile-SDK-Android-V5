@@ -200,6 +200,17 @@ class MediaFragment : DJIFragment() {
             mediaVM.takePhoto(object : CommonCallbacks.CompletionCallback {
                 override fun onSuccess() {
                     ToastUtils.showToast("take photo success")
+                    mainHandler.postDelayed({
+                        mediaVM.takePhoto(object : CommonCallbacks.CompletionCallback {
+                            override fun onSuccess() {
+                                ToastUtils.showToast("take photo success")
+                            }
+
+                            override fun onFailure(error: IDJIError) {
+                                ToastUtils.showToast("take photo failed $error")
+                            }
+                        })
+                    }, 1000)
                 }
 
                 override fun onFailure(error: IDJIError) {
